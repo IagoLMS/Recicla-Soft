@@ -1,6 +1,7 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+#include <locale.h>
 
 //void* malloc(sizeT)
 
@@ -8,13 +9,70 @@ typedef struct{
 	
 }Info;
 
+typedef struct{
+	char nome[50][10];
+	char senha[50][10];
+}catadores;
+
+void cadastroCatador(catadores cadastro){
+	
+	system("cls");
+	printf("//=================( RECICLA SOFT )=================//\n");
+	printf("|\n");
+	printf("| Insira Seu Nome\n");
+	printf("|\n");
+	printf("//==================================================//\n");
+	scanf("%s", &cadastro.nome[1][1]);
+	
+	
+	printf("//=================( RECICLA SOFT )=================//\n");
+	printf("|\n");
+	printf("| Insira Uma Senha\n");
+	printf("|\n");
+	printf("//==================================================//\n");
+	scanf("%s", &cadastro.senha[1]);
+}
+
 void acessoAdmin(){
 	
 }
 
 void acessoCatador(){
+	catadores cadastro;
+	int n;
 	
+	system("cls");
+	printf("//=================( RECICLA SOFT )=================//\n");
+	printf("|\n");
+	printf("|\n");
+	printf("| (1) - Cadastrar \n");
+	printf("| (2) - Entrar\n");
+	printf("|\n");
+	printf("| (0) - Sair\n");
+	printf("|\n");
+	printf("//==================================================//\n");
+	
+	scanf("%i", &n);
+	switch(n){
+		case 1: //Cadastro
+			cadastroCatador(cadastro);
+			break;
+			
+		case 2: //Entrar
+		
+			break;
+			
+		case 0: //Encerrar Fun√ß√£o
+			system("cls");
+			return;
+			break;
+			
+		default: 
+			printf("Escolha Invalida");
+	}	
 }
+
+
 
 void menuIncial1(int n){
 	
@@ -32,18 +90,18 @@ void menuIncial1(int n){
 	
 	switch(n){
 		case 1: //Menu do catador
-			printf("1");
+			acessoCatador();
 			break;
 			
 		case 2: //Menu de Admin
 		
 			break;
 			
-		case 3: //DocumentaÁ„o
+		case 3: //Documenta√ß√£o
 		
 			break;
 			
-		case 0: //FinalizaÁ„o do programa
+		case 0: //Finaliza√ß√£o do programa
 			system("cls");
 			printf("Encerrando o sistema ......................... 100%");
 			exit(1);
@@ -61,6 +119,8 @@ int main(void){
 	int n, i;
 	
 	int escolha; 
+	
+	setlocale(LC_ALL, "portuguese");
 	
 	do{
 		system("cls");
