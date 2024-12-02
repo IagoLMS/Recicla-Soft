@@ -12,9 +12,9 @@ typedef struct{
 typedef struct{
 	char nome[50][10];
 	char senha[50][10];
-}catadores;
+}Catadores;
 
-void cadastroCatador(catadores cadastro){
+void cadastroCatador(Catadores cadastro){
 	
 	system("cls");
 	printf("//=================( RECICLA SOFT )=================//\n");
@@ -33,12 +33,32 @@ void cadastroCatador(catadores cadastro){
 	scanf("%s", &cadastro.senha[1]);
 }
 
+typedef struct {
+	char name [50][10];
+	char password[50][10];
+} Admin;
 void acessoAdmin(){
+	system("cls");
+	Admin admins;
+	printf("//=================( RECICLA SOFT )=================//\n");
+	printf("|\n");
+	printf("| Insira Seu Nome\n");
+	printf("|\n");
+	printf("//==================================================//\n");
+	scanf("%s", &admins.name[1][1]);
+	
+	
+	printf("//=================( RECICLA SOFT )=================//\n");
+	printf("|\n");
+	printf("| Insira Uma Senha\n");
+	printf("|\n");
+	printf("//==================================================//\n");
+	scanf("%s", &admins.password[1]);
 	
 }
 
 void acessoCatador(){
-	catadores cadastro;
+	Catadores cadastro;
 	int n;
 	
 	system("cls");
@@ -94,7 +114,7 @@ void menuIncial1(int n){
 			break;
 			
 		case 2: //Menu de Admin
-		
+			acessoAdmin();
 			break;
 			
 		case 3: //Documentação
