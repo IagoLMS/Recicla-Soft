@@ -55,8 +55,44 @@ void acessoAdmin(){
 	printf("//==================================================//\n");
 	scanf("%s", &admins.password[1]);
 	
+	int opcaoAdmin;
+	
+	do {
+		system ("cls");
+		printf("//=================( MENU DO ADM )=================//\n");
+		printf("\n");
+		printf("|1- Listar Materiais reciclaveis\n");
+		printf("|2- Menu inicial");
+		printf("\n");
+		printf("//==================================================//\n");
+		printf("Escolha uma opção: ");
+		scanf("%d", &opcaoAdmin);
+		
+		switch (opcaoAdmin) {
+			case 1: 
+			ListarMaterial();
+			system("pause");
+			break;
+			case 2: 
+			printf("Voltando para o menu inicial!\n");
+			break;
+			
+			default:
+				printf("Opção Invalida");
+				system ("pause");
+		}
+	} while (opcaoAdmin != 2);
+		
+	
 }
-
+void ListarMaterial() {
+	printf("Materiais Reciclaveis disponiveis\n");
+	printf("1- Ouro\n");
+	printf("2- cobre\n");
+	printf("3- Ferro\n");
+	printf("4- Aluminio\n");
+	printf("5- Plastico\n");
+}
 void acessoCatador(){
 	Catadores cadastro;
 	int n;
