@@ -31,6 +31,12 @@ void cadastroCatador(Catadores cadastro){
 	printf("|\n");
 	printf("//==================================================//\n");
 	scanf("%s", &cadastro.senha[1]);
+	
+	printf("//=================( RECICLA SOFT )=================//\n");
+	printf("|\n");
+	printf("| Bem vindo (a) %s!\n", &cadastro.nome[1][1]);
+	printf("|\n");
+	printf("//==================================================//\n");
 }
 
 typedef struct {
@@ -95,6 +101,14 @@ void acessoAdmin(){
 	
 	}
 }
+void ListarCatadores () {
+	printf("Catadores disponiveis\n");
+	printf("1- Moak\n");
+	printf("2- Ikaro\n");
+	printf("3- Erick\n");
+	printf("4- Jefite\n");
+	printf("5- Ingrid\n");
+}
 void ListarMaterial() {
 	printf("Materiais Reciclaveis disponiveis\n");
 	printf("1- Ouro\n");
@@ -148,7 +162,6 @@ void menuIncial1(int n){
 	printf("| (1) - Menu do Catador \n");
 	printf("| (2) - Menu do Administrador\n");
 	printf("| (3) - Documentacao\n");
-	printf("|\n");
 	printf("| (0) - Sair\n");
 	printf("|\n");
 	printf("//==================================================//\n");
@@ -164,12 +177,12 @@ void menuIncial1(int n){
 			break;
 			
 		case 3: //Documentação
-		
+			ListarCatadores();
 			break;
 			
 		case 0: //Finalização do programa
 			system("cls");
-			printf("Encerrando o sistema ......................... 100%");
+			printf("Encerrando o sistema .........................");
 			exit(1);
 			break;
 			
