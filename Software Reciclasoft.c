@@ -40,12 +40,15 @@ typedef struct {
 void acessoAdmin(){
 	system("cls");
 	Admin admins;
+	//usuario e senha para acessar login de admin
+	char nomeCorreto[] = "Senai";
+	char senhaCorreta[] = "1234";
 	printf("//=================( RECICLA SOFT )=================//\n");
 	printf("|\n");
 	printf("| Insira Seu Nome\n");
 	printf("|\n");
 	printf("//==================================================//\n");
-	scanf("%s", &admins.name[1][1]);
+	scanf("%s", &admins.name[0][0]);
 	
 	
 	printf("//=================( RECICLA SOFT )=================//\n");
@@ -53,7 +56,9 @@ void acessoAdmin(){
 	printf("| Insira Uma Senha\n");
 	printf("|\n");
 	printf("//==================================================//\n");
-	scanf("%s", &admins.password[1]);
+	scanf("%s", &admins.password[0]);                                                             
+	//comparando se o usuario e a senha estão corretas
+	if (strcmp(admins.name[0], nomeCorreto) == 0 && strcmp(admins.password[0], senhaCorreta) == 0) {
 	
 	int opcaoAdmin;
 	
@@ -73,6 +78,7 @@ void acessoAdmin(){
 			ListarMaterial();
 			system("pause");
 			break;
+			
 			case 2: 
 			printf("Voltando para o menu inicial!\n");
 			break;
@@ -82,8 +88,12 @@ void acessoAdmin(){
 				system ("pause");
 		}
 	} while (opcaoAdmin != 2);
-		
 	
+  } else {
+	printf("Usuario ou senha incorreto!");
+	system ("pause");
+	
+	}
 }
 void ListarMaterial() {
 	printf("Materiais Reciclaveis disponiveis\n");
@@ -171,12 +181,12 @@ void menuIncial1(int n){
 }
 
 int main(void){
+	setlocale(LC_ALL, "Portuguese");
 	int *numeros;
 	int n, i;
 	
 	int escolha; 
 	
-	setlocale(LC_ALL, "portuguese");
 	
 	do{
 		system("cls");
