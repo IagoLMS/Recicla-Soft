@@ -1,91 +1,101 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
+#include <string.h>
 #include <locale.h>
 
-//void* malloc(sizeT)
+#define TAM 50
+
+int code = 0;
+
+void limpa(){
+	system("cls");
+}
+
+void pausa(){
+	system("pause");
+}
 
 typedef struct{
 	
 }Info;
 
 typedef struct{
-	char nome[50][10];
-	char senha[50][10];
+	char nome[50];
+	int cpf;
+	char senha[20];
 }Catadores;
 
-void cadastroCatador(Catadores cadastro){
+typedef struct {
+	char name [50];
+	char password[20];
+} Admin;
+
+void cadastroCatador(Catadores cadastro[]) {
 	
-	system("cls");
-	printf("//=================( RECICLA SOFT )=================//\n");
-	printf("|\n");
-	printf("| Insira Seu Nome\n");
-	printf("|\n");
-	printf("//==================================================//\n");
-	scanf("%s", &cadastro.nome[1][1]);
-	
-	
-	printf("//=================( RECICLA SOFT )=================//\n");
-	printf("|\n");
-	printf("| Insira Uma Senha\n");
-	printf("|\n");
-	printf("//==================================================//\n");
-	scanf("%s", &cadastro.senha[1]);
-	
-	printf("//=================( RECICLA SOFT )=================//\n");
-	printf("|\n");
-	printf("| Bem vindo (a) %s!\n", &cadastro.nome[1][1]);
-	printf("|\n");
-	printf("//==================================================//\n");
+    if (code >= TAM) {
+        printf("//====================( Cadastro )==================//\n");
+        printf("| Espaço de memória cheio. Por favor, aloque mais espaço.\n");
+        pausa();
+    }
+
+    printf("//====================( Cadastro )==================//\n");
+    printf("| Insira seu nome:\n");
+    getchar(); // Limpa o buffer
+    gets(cadastro[code].nome); // Uso de `gets` é inseguro, mas mantive para compatibilidade
+    printf("| Insira o seu CPF (Somente números):\n");
+    scanf("%d", &cadastro[code].cpf);
+    getchar(); // Limpa o buffer
+    printf("| Insira sua senha:\n");
+    gets(cadastro[code].senha);
+    printf("| Cadastro realizado com sucesso!\n");
+    printf("//==================================================//\n");
+
+    code++;
 }
 
-typedef struct {
-	char name [50][10];
-	char password[50][10];
-} Admin;
-void acessoAdmin(){
-	system("cls");
+void loginAdmin(){
+	
 	Admin admins;
 	//usuario e senha para acessar login de admin
 	char nomeCorreto[] = "Senai";
 	char senhaCorreta[] = "1234";
 	printf("//=================( RECICLA SOFT )=================//\n");
 	printf("|\n");
-	printf("| Insira Seu Nome\n");
+	printf("| Usuario:\n");
+	gets(admins.name);
+	printf("|\n");
+	printf("| Senha:\n");
+	gets(admins.password);                                                             
 	printf("|\n");
 	printf("//==================================================//\n");
-	scanf("%s", &admins.name[0][0]);
-	
-	
-	printf("//=================( RECICLA SOFT )=================//\n");
-	printf("|\n");
-	printf("| Insira Uma Senha\n");
-	printf("|\n");
-	printf("//==================================================//\n");
-	scanf("%s", &admins.password[0]);                                                             
 	//comparando se o usuario e a senha estão corretas
-	if (strcmp(admins.name[0], nomeCorreto) == 0 && strcmp(admins.password[0], senhaCorreta) == 0) {
+	if (strcmp(admins.name, nomeCorreto) == 0 && strcmp(admins.password, senhaCorreta) == 0) {
 	
 	int opcaoAdmin;
 	
 	do {
 		system ("cls");
-		printf("//=================( MENU DO ADM )=================//\n");
+		printf("//======================( ADM )=====================//\n");
 		printf("\n");
-		printf("|1- Listar Materiais reciclaveis\n");
-		printf("|2- Menu inicial");
+		printf("|1- Estoque\n");
+		printf("|2- Listar Materiais reciclaveis\n");
+		printf("|3- Área de pagamento\n");
+		printf("\n");
+		printf("|0- Menu inicial");
 		printf("\n");
 		printf("//==================================================//\n");
 		printf("Escolha uma opção: ");
 		scanf("%d", &opcaoAdmin);
+		limpa();
 		
 		switch (opcaoAdmin) {
-			case 1: 
-			ListarMaterial();
+			case 2: 
+//			ListarMaterial();
 			system("pause");
 			break;
 			
-			case 2: 
+			case 0: 
 			printf("Voltando para o menu inicial!\n");
 			break;
 			
@@ -93,7 +103,7 @@ void acessoAdmin(){
 				printf("Opção Invalida");
 				system ("pause");
 		}
-	} while (opcaoAdmin != 2);
+	} while(1);
 	
   } else {
 	printf("Usuario ou senha incorreto!");
@@ -117,29 +127,27 @@ void ListarMaterial() {
 	printf("4- Aluminio\n");
 	printf("5- Plastico\n");
 }
-void acessoCatador(){
-	Catadores cadastro;
+void acessoCatador(Catadores cadastroCatadores[]){
 	int n;
 	
 	system("cls");
-	printf("//=================( RECICLA SOFT )=================//\n");
-	printf("|\n");
+	printf("//===================( Catadores )==================//\n");
 	printf("|\n");
 	printf("| (1) - Cadastrar \n");
 	printf("| (2) - Entrar\n");
 	printf("|\n");
 	printf("| (0) - Sair\n");
 	printf("|\n");
-	printf("//==================================================//\n");
-	
 	scanf("%i", &n);
+	printf("|\n");	
+	printf("//==================================================//\n");
 	switch(n){
 		case 1: //Cadastro
-			cadastroCatador(cadastro);
+			cadastroCatador(cadastroCatadores);
 			break;
 			
 		case 2: //Entrar
-		
+			
 			break;
 			
 		case 0: //Encerrar Função
@@ -154,35 +162,35 @@ void acessoCatador(){
 
 
 
-void menuIncial1(int n){
+void menuIncial(int n, Catadores cadastroCatadores[]){
 	
 	printf("//=================( RECICLA SOFT )=================//\n");
 	printf("|\n");
 	printf("|\n");
-	printf("| (1) - Menu do Catador \n");
-	printf("| (2) - Menu do Administrador\n");
-	printf("| (3) - Documentacao\n");
+	printf("| (1) - Área dos Catador \n");
+	printf("| (2) - Menu Administrador\n");
 	printf("| (0) - Sair\n");
+	scanf("%i", &n);
 	printf("|\n");
 	printf("//==================================================//\n");
-	scanf("%i", &n);
+	limpa();
 	
 	switch(n){
 		case 1: //Menu do catador
-			acessoCatador();
+			acessoCatador(cadastroCatadores);
 			break;
 			
 		case 2: //Menu de Admin
-			acessoAdmin();
+			loginAdmin();
 			break;
 			
 		case 3: //Documentação
-			ListarCatadores();
+//			ListarCatadores();
 			break;
 			
 		case 0: //Finalização do programa
-			system("cls");
-			printf("Encerrando o sistema .........................");
+			printf("Encerrando o sistema .............................[100%]");
+			pausa();
 			exit(1);
 			break;
 			
@@ -195,21 +203,14 @@ void menuIncial1(int n){
 
 int main(void){
 	setlocale(LC_ALL, "Portuguese");
-	int *numeros;
+	Catadores cadastroCatadores[code];
 	int n, i;
 	
 	int escolha; 
 	
 	
 	do{
-		system("cls");
-		menuIncial1(escolha);
-		
-		/*numeros = malloc(n*sizeof(int));
-		if(numeros == NULL){
-			printf("Erro memoria excedida\n");
-			exit(1);
-		}*/
+		menuIncial(escolha, cadastroCatadores);
 	
 	} while(1);
 }
