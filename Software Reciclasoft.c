@@ -6,131 +6,96 @@
 
 #define TAM 50
 
-int code = 0;
+int code = 1;
+
+typedef struct{
+	char nome[60];
+	int idade;
+	int cpf;
+	char status[30];
+	float saldo;
+	
+}Catadores;
+
+typedef struct{
+	char usuario[40];
+	char senha[20];
+	Catadores catador;
+	
+}Cadastro;
 
 void limpa(){
 	system("cls");
 }
-
 void pausa(){
 	system("pause");
 }
+void buffed(){
+	fflush(stdin);
+}
 
-typedef struct{
-	
-}Info;
-
-typedef struct{
-	char nome[50];
-	int cpf;
-	char senha[20];
-}Catadores;
-
-typedef struct {
-	char name [50];
-	char password[20];
-} Admin;
-
-void cadastroCatador(Catadores cadastro[]) {
+void cadastroCatador(Cadastro cadastrado[]) {
 	
     if (code >= TAM) {
         printf("//====================( Cadastro )==================//\n");
         printf("| Espaço de memória cheio. Por favor, aloque mais espaço.\n");
         pausa();
+        return;
     }
 
     printf("//====================( Cadastro )==================//\n");
-    printf("| Insira seu nome:\n");
-    getchar(); // Limpa o buffer
-    gets(cadastro[code].nome); // Uso de `gets` é inseguro, mas mantive para compatibilidade
+    printf("| Insira seu Nome:\n");
+    gets(cadastrado[code].catador.nome);
+	buffed();
     printf("| Insira o seu CPF (Somente números):\n");
-    scanf("%d", &cadastro[code].cpf);
-    getchar(); // Limpa o buffer
+    scanf("%d", &cadastrado[code].catador.cpf);
+	buffed();
     printf("| Insira sua senha:\n");
-    gets(cadastro[code].senha);
+    gets(cadastrado[code].senha);
     printf("| Cadastro realizado com sucesso!\n");
     printf("//==================================================//\n");
-
     code++;
 }
 
-void loginAdmin(){
-	
-	Admin admins;
-	//usuario e senha para acessar login de admin
-	char nomeCorreto[] = "Senai";
-	char senhaCorreta[] = "1234";
-	printf("//=================( RECICLA SOFT )=================//\n");
-	printf("|\n");
-	printf("| Usuario:\n");
-	gets(admins.name);
-	printf("|\n");
-	printf("| Senha:\n");
-	gets(admins.password);                                                             
-	printf("|\n");
-	printf("//==================================================//\n");
-	//comparando se o usuario e a senha estão corretas
-	if (strcmp(admins.name, nomeCorreto) == 0 && strcmp(admins.password, senhaCorreta) == 0) {
-	
-	int opcaoAdmin;
-	
-	do {
-		system ("cls");
-		printf("//======================( ADM )=====================//\n");
-		printf("\n");
-		printf("|1- Estoque\n");
-		printf("|2- Listar Materiais reciclaveis\n");
-		printf("|3- Área de pagamento\n");
-		printf("\n");
-		printf("|0- Menu inicial");
-		printf("\n");
-		printf("//==================================================//\n");
-		printf("Escolha uma opção: ");
-		scanf("%d", &opcaoAdmin);
-		limpa();
-		
-		switch (opcaoAdmin) {
-			case 2: 
-//			ListarMaterial();
-			system("pause");
-			break;
-			
-			case 0: 
-			printf("Voltando para o menu inicial!\n");
-			break;
-			
-			default:
-				printf("Opção Invalida");
-				system ("pause");
-		}
-	} while(1);
-	
-  } else {
-	printf("Usuario ou senha incorreto!");
-	system ("pause");
-	
-	}
+
+int validador(Cadastro cadastrado[], char *testeUsuario, char *testeSenha) {
+    for (int i = 0; i < code; i++) {
+        if (strcmp(testeUsuario, cadastrado[i].usuario) == 0 && strcmp(testeSenha, cadastrado[i].senha) == 0) {
+            return -1;
+        }
+    }
+    return 0; 
 }
-void ListarCatadores () {
-	printf("Catadores disponiveis\n");
-	printf("1- Moak\n");
-	printf("2- Ikaro\n");
-	printf("3- Erick\n");
-	printf("4- Jefite\n");
-	printf("5- Ingrid\n");
+
+void loginCatador(Cadastro cadastrado[]) {
+    char testeUsuario[50];
+    char testeSenha[20];
+
+    do {
+        printf("//=================( RECICLA SOFT )=================//\n");
+        printf("|\n");
+        printf("| Usuário:\n");
+        gets(testeUsuario); 
+        printf("|\n");
+        printf("| Senha:\n");
+        gets(testeSenha);
+        printf("|\n");
+        printf("//==================================================//\n");
+
+        if (validador(cadastrado, testeUsuario, testeSenha) == -1) {
+            printf("Login bem-sucedido! Bem-vindo, %s.\n", testeUsuario);
+            break;
+        } else {
+            printf("Usuário ou senha incorretos. Tente novamente.\n");
+        }
+    } while (1);
 }
-void ListarMaterial() {
-	printf("Materiais Reciclaveis disponiveis\n");
-	printf("1- Ouro\n");
-	printf("2- cobre\n");
-	printf("3- Ferro\n");
-	printf("4- Aluminio\n");
-	printf("5- Plastico\n");
-}
-void acessoCatador(Catadores cadastroCatadores[]){
+
+
+void menuCatador(Cadastro cadastrado[]){
 	int n;
 	
-	system("cls");
+	limpa();
 	printf("//===================( Catadores )==================//\n");
 	printf("|\n");
 	printf("| (1) - Cadastrar \n");
@@ -143,11 +108,11 @@ void acessoCatador(Catadores cadastroCatadores[]){
 	printf("//==================================================//\n");
 	switch(n){
 		case 1: //Cadastro
-			cadastroCatador(cadastroCatadores);
+			cadastroCatador(cadastrado);
 			break;
 			
 		case 2: //Entrar
-			
+			loginCatador(cadastrado);
 			break;
 			
 		case 0: //Encerrar Função
@@ -160,15 +125,137 @@ void acessoCatador(Catadores cadastroCatadores[]){
 	}	
 }
 
+void menuADM(Cadastro cadastrados[]){
+	int escolha;
+	
+	printf("//======================( ADM )=====================//\n");
+	printf("\n");
+	
+	printf("MATERIAIS:\n");
+	printf("___________________________\n");
+	printf("|1- Estoque\n");
+	printf("|2- Vender Materias\n");
+	printf("\n");
+	
+	printf("ÁREA DE CADASTRO\n");
+	printf("___________________________\n");
+	printf("|3- Adicionar Materias \n");
+	printf("|4- Lista de Materiais\n");
+	printf("\n");
+	
+	printf("ÁREA DOS CATADORES\n");
+	printf("___________________________\n");
+	printf("|5- Listar Catadores \n");
+	printf("|6- Alterar Cadastro\n");
+	printf("\n");
+	
+	printf("ÁREA DOS PAGAMENTO\n");
+	printf("___________________________\n");
+	printf("|7- Saldo da Empresa \n");
+	printf("|8- Pagar Catador \n");
+	
+	printf("\n");
+	printf("___________________________\n");
+	printf("|0- Menu inicial");
+	printf("\n");
+	printf("//==================================================//\n");
+	printf("Escolha uma opção: ");
+	scanf("%d", &escolha);
+	limpa();
+	pausa();
+	
+	switch (escolha) {
+		case 1: // estoque
+//			ListarMaterial();
+		break;
+		
+		case 2: //
 
+		break;
+		
+		case 3: 
 
-void menuIncial(int n, Catadores cadastroCatadores[]){
+		break;
+		
+		case 4: 
+
+		break;
+		
+		case 5: 
+
+		break;
+		
+		case 6: 
+
+		break;
+		
+		case 0: 
+			printf("___________________________________\n");
+			printf("|Voltando para o menu inicial!\n");
+			pausa();
+		break;
+		
+		default:
+			printf("___________________________________\n");
+			printf("Opção Invalida");
+			pausa();
+	}
+}
+
+void loginAdmin(Cadastro cadastrados[]){
+	char testeUsuario[50];
+	char testeSenha[20];
+	
+	do {
+        printf("//=================( RECICLA SOFT )=================//\n");
+        printf("|\n");
+        printf("| Usuário:\n");
+        gets(testeUsuario); 
+        printf("|\n");
+        printf("| Senha:\n");
+        gets(testeSenha);
+        printf("|\n");
+        printf("//==================================================//\n");
+		limpa();
+
+        if (strcmp(testeUsuario, cadastrados[0].usuario) == 0 && strcmp(testeSenha, cadastrados[0].senha) == 0) {
+			printf("Login bem-sucedido! Bem-vindo, %s.\n", testeUsuario);
+			pausa();
+            menuADM(cadastrados);
+            
+        } else {
+            printf("Usuário ou senha incorretos. Tente novamente.\n");
+        }
+    } while (1); 
+}
+
+void ListarCatadores () {
+	printf("Catadores disponiveis\n");
+	printf("1- Moak\n");
+	printf("2- Ikaro\n");
+	printf("3- Erick\n");
+	printf("4- Jefite\n");
+	printf("5- Ingrid\n");
+}
+
+void ListarMaterial() {
+	printf("Materiais Reciclaveis disponiveis\n");
+	printf("1- Ouro\n");
+	printf("2- cobre\n");
+	printf("3- Ferro\n");
+	printf("4- Aluminio\n");
+	printf("5- Plastico\n");
+}
+
+void menuIncial(int n, Cadastro cadastrado[]){
 	
 	printf("//=================( RECICLA SOFT )=================//\n");
 	printf("|\n");
-	printf("|\n");
+	
 	printf("| (1) - Área dos Catador \n");
+	
 	printf("| (2) - Menu Administrador\n");
+	printf("|\n");
 	printf("| (0) - Sair\n");
 	scanf("%i", &n);
 	printf("|\n");
@@ -177,11 +264,11 @@ void menuIncial(int n, Catadores cadastroCatadores[]){
 	
 	switch(n){
 		case 1: //Menu do catador
-			acessoCatador(cadastroCatadores);
+			menuCatador(cadastrado);
 			break;
 			
 		case 2: //Menu de Admin
-			loginAdmin();
+			loginAdmin(cadastrado);
 			break;
 			
 		case 3: //Documentação
@@ -203,14 +290,18 @@ void menuIncial(int n, Catadores cadastroCatadores[]){
 
 int main(void){
 	setlocale(LC_ALL, "Portuguese");
-	Catadores cadastroCatadores[code];
+	Cadastro cadastrado[code];
 	int n, i;
 	
 	int escolha; 
 	
+	Cadastro cadastrados[1] = {
+        {"senai", "senha"} // Login padrão do administrador
+    };
+
 	
 	do{
-		menuIncial(escolha, cadastroCatadores);
+		menuIncial(escolha, cadastrado);
 	
 	} while(1);
 }
