@@ -132,9 +132,9 @@ void loginCatador(Cadastro cadastrado[]) {
 			do {
 				limpa();
 				printf("//=================( RECICLA SOFT )=================//\n");
-				printf("(1) Cadastrar Materiais");
+				printf("(1) Cadastrar Materiais\n");
 				printf("(0) Voltar");
-				printf("\nEscolha uma opção");
+				printf("\nEscolha uma opção: ");
 				scanf("%d", &opcao);
 				buffed();
 				pausa();
@@ -336,10 +336,10 @@ void cadastrarMaterial(Cadastro *catador) {
 		case 1:
 			strcpy(novoMaterial.tipo, "Ouro");
 			break;
-			case 2:
+		case 2:
 			strcpy(novoMaterial.tipo, "Cobre");
 			break;
-			case 3:
+		case 3:
 			strcpy(novoMaterial.tipo, "Ferro");
 			break;
 		case 4:
@@ -354,7 +354,7 @@ void cadastrarMaterial(Cadastro *catador) {
 			return;
 	}
 	
-	printf("Quantos Kg você tem do material?");
+	printf("Quantos Kg você tem do material? ");
 	scanf("%f", &novoMaterial.quantidade);
 	buffed();
 	
@@ -366,19 +366,21 @@ void cadastrarMaterial(Cadastro *catador) {
 	
 }
 void comprarMaterial (Cadastro cadastrados[]) {
-	 if (materialQuantidade = 0){
-	 	printf("Nenhum material disponivel para compra!");
+	 if (materialQuantidade == 0){
+	 	printf("Nenhum material disponivel para compra!\n");
 	 	pausa();
 	 	return;
 	 }
-	printf("Materiais disponiveis para compra: ");
+	printf("Materiais disponiveis para compra: \n");
+	printf("//==================================================//\n");
 	for (int i = 0; i < materialQuantidade; i++) {
 		printf("ID: %d\n", i + 1);
 		printf("Tipo: %s\n", materiais[i].tipo);
 		printf("Quantidade: %.2f\n", materiais[i].quantidade);
 		printf("CPF: %d\n", materiais[i].cpfCatador);
+		printf("//==================================================//\n");
 	}
-	
+	limpa();
 	printf("Digite o ID do material que deseja comprar (0 para sair): ");
 	int escolha;
 	scanf("%d", &escolha);
@@ -388,6 +390,7 @@ void comprarMaterial (Cadastro cadastrados[]) {
 	
 	printf("Comprando %s (%.2f kg) do catador com cpf %d\n", materiais[compra].tipo, 
 	materiais[compra].quantidade, materiais[compra].cpfCatador);
+	
 	
 	for (int i = 0; i < TAM; i++) {
 		if (cadastrados[i].catador.cpf == materiais[compra].cpfCatador) {
@@ -402,12 +405,13 @@ void comprarMaterial (Cadastro cadastrados[]) {
 	}
 	materialQuantidade--;
 	
-	printf("Compra realizada!");
+	printf("Compra realizada!\n");
 	pausa(); 
 }
 
 
 void ListarMaterial() {
+	limpa();
 	printf("Materiais Reciclaveis disponiveis\n");
 	printf("1- Ouro\n");
 	printf("2- cobre\n");
