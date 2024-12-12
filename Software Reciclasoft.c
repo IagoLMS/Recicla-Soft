@@ -9,6 +9,8 @@
 
 int code = 1;
 
+//testando//
+
 typedef struct {
 	char nome[60];
 	int idade;
