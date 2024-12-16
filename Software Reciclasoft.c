@@ -165,30 +165,27 @@ void estoqueMaterial(){
 			limpa();
 			printf("\nEscolha uma opção: ");
 			printf("Materiais Reciclaveis disponiveis\n");
-			printf("1- &s\n", materiais.tipo[0] );
-			printf("2- &s\n", materiais.tipo[1]);
-			printf("3- &s\n", materiais.tipo[2]);
-			printf("4- &s\n", materiais.tipo[3]);
-			printf("5- &s\n", materiais.tipo[4]);
+			printf("1- %s\n", materiais.tipo[0] );
+			printf("2- %s\n", materiais.tipo[1]);
+			printf("3- %s\n", materiais.tipo[2]);
+			printf("4- %s\n", materiais.tipo[3]);
+			printf("5- %s\n", materiais.tipo[4]);
 		
 			scanf("%d", &opcao);
 			buffed();
-			pausa();
-	
-			for(int i = 0; i < MAXMATERIAL; i++){
-				printf("De %s nós temos: %f", materiais.tipo[opcao], materiais.quantidade[opcao]);
-			}
+				printf("De %s nós temos: %f\n", materiais.tipo[opcao], materiais.quantidade[opcao]);
+			
 			break;
 		
 		case 2:
 			limpa();
 			printf("\nEscolha uma opção: ");
 			printf("Materiais Reciclaveis disponiveis\n");
-			printf("1- &s\n", materiais.tipo[0] );
-			printf("2- &s\n", materiais.tipo[1]);
-			printf("3- &s\n", materiais.tipo[2]);
-			printf("4- &s\n", materiais.tipo[3]);
-			printf("5- &s\n", materiais.tipo[4]);
+			printf("1- %s\n", materiais.tipo[0] );
+			printf("2- %s\n", materiais.tipo[1]);
+			printf("3- %s\n", materiais.tipo[2]);
+			printf("4- %s\n", materiais.tipo[3]);
+			printf("5- %s\n", materiais.tipo[4]);
 		
 			scanf("%d", &opcao);
 			buffed();
@@ -564,7 +561,7 @@ void menuInicial(Cadastro cadastrado[]) {
 }
 
 int main() {
-	setlocale(LC_ALL, "portuguese");
+	setlocale(LC_ALL, "Portuguese");
 
 	Cadastro cadastrado[TAM] = {{"senai", "senha"}};
 
