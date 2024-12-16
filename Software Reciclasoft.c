@@ -147,8 +147,9 @@ void comprarMaterial (Cadastro cadastrados[]) {
 	pausa(); 
 }
 
-void estoqueMaterial(Material materiais){
+void estoqueMaterial(){
 	int n, opcao;
+	Material materiais;
 	
 	limpa();
 	printf("//=================( RECICLA SOFT )=================//\n");
@@ -389,7 +390,7 @@ void menuADM(Cadastro cadastrados[]) {
 
 		switch (escolha) {
 			case 1: // estoque
-//			ListarMaterial();
+				estoqueMaterial();
 				break;
 
 			case 2: //
