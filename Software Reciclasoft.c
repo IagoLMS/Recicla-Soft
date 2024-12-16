@@ -20,7 +20,7 @@ typedef struct {
 
 typedef struct {
 	char tipo[30];
-	float quantidade;
+	float quantidade[30];
 	
 }Material;
 
@@ -119,7 +119,7 @@ void comprarMaterial (Cadastro cadastrados[]) {
 	scanf("%f", &quantidadeCompra);
 	buffed();
 	
-	if (quantidadeCompra > materiais[compra].quantidade) {
+	if (quantidadeCompra > materiais[compra].quantidade[escolha]) {
 		printf("A quantidade que você solicitou não existe no estoque!\n");
 		printf("Quantidade disponivel: %.2f", materiais[compra].quantidade);
 		pausa();
@@ -135,7 +135,7 @@ void comprarMaterial (Cadastro cadastrados[]) {
 			break;
 		}
 	}  */
-	materiais[compra].quantidade -= quantidadeCompra;
+	materiais[compra].quantidade[escolha] -= quantidadeCompra;
 	if(materiais[compra].quantidade == 0){
 	for (int i = compra; i < materialQuantidade -1; i++) {
 		materiais[i] = materiais [i + 1];
@@ -145,6 +145,57 @@ void comprarMaterial (Cadastro cadastrados[]) {
 	
 	printf("Compra realizada!\n");
 	pausa(); 
+}
+
+void estoqueMaterial(Material materiais){
+	int n, opcao;
+	
+	limpa();
+	printf("//=================( RECICLA SOFT )=================//\n");
+	printf("//===================( ESTOQUE )====================//\n");
+	printf("|\n");
+	printf("| (1) - Verificar Estoque \n");
+	printf("| (2) - Trocar Quantidade\n");
+	printf("| (0) - Voltar\n");
+	scanf("%i", &n);
+		
+	switch(n){
+		case 1:
+			limpa();
+			printf("\nEscolha uma opção: ");
+			printf("Materiais Reciclaveis disponiveis\n");
+			printf("1- &s\n", materiais.tipo[0] );
+			printf("2- &s\n", materiais.tipo[1]);
+			printf("3- &s\n", materiais.tipo[2]);
+			printf("4- &s\n", materiais.tipo[3]);
+			printf("5- &s\n", materiais.tipo[4]);
+		
+			scanf("%d", &opcao);
+			buffed();
+			pausa();
+	
+			for(int i = 0; i < MAXMATERIAL; i++){
+				printf("De %s nós temos: %f", materiais.tipo[opcao], materiais.quantidade[opcao]);
+			}
+			break;
+		
+		case 2:
+			limpa();
+			printf("\nEscolha uma opção: ");
+			printf("Materiais Reciclaveis disponiveis\n");
+			printf("1- &s\n", materiais.tipo[0] );
+			printf("2- &s\n", materiais.tipo[1]);
+			printf("3- &s\n", materiais.tipo[2]);
+			printf("4- &s\n", materiais.tipo[3]);
+			printf("5- &s\n", materiais.tipo[4]);
+		
+			scanf("%d", &opcao);
+			buffed();
+			
+			printf("\nDigite o novo valor: ");
+			scanf("%f", materiais.quantidade[opcao]);
+	}
+	
 }
 
 void ListarMaterial() {
@@ -241,7 +292,7 @@ void loginCatador(Cadastro cadastrado[]) {
 				switch (opcao) {
 					case 1:
 						printf("//=================(Escolha Material)=================//\n");
-//						cadastrarMaterial(cadastrado);
+//						estoqueMaterial);
 						limpa();
 						break;
 					
@@ -420,8 +471,8 @@ void loginAdmin(Cadastro cadastrado[]) {
 		}
 	} while (1);
 }
-/*
-void cadastrarMaterial(Cadastro *cadastrado) {
+
+/*void cadastrarMaterial(Cadastro *cadastrado) {
 	if (materialQuantidade >= MAXMATERIAL) {
 		printf("Capacidade máxima de material! ");
 		pausa();
