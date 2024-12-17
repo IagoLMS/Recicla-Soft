@@ -65,11 +65,11 @@ void inicializarCatadores() {
 	strcpy(catadores[2].cpf, "34567890123");
 
 	strcpy(catadores[3].nome, "Jefite");
-	catadores[3].local[0] = 'Salvador';  
+	catadores[3].local[0] = "Salvador";  
 	strcpy(catadores[3].cpf, "45678901234");
 
 	strcpy(catadores[4].nome, "Ingrid");
-	catadores[4].local[0] = 'Pernambuco';  
+	catadores[4].local[0] = "Pernambuco";  
 	strcpy(catadores[4].cpf, "56789812345");
 }
 
@@ -246,17 +246,18 @@ void cadastroCatador(Cadastro cadastrado[]) {
 
 	printf("Informe o usuario ");
 	buffed();
-	gets(cadastrado[numCatadores].usuario);
+	gets(cadastrado[code].usuario);
 
 	printf("| Insira sua senha:\n");
 	buffed();
-	gets(cadastrado[numCatadores].senha);
+	gets(cadastrado[code].senha);
 
-	catadores[numCatadores].saldo = 0.0;
+	cadastrado[code].catador.saldo = 0.0;
 
 	printf("| Cadastro realizado com sucesso!\n");
 	printf("//==================================================//\n");
 	pausa();
+	code++;
 	numCatadores++; 
 }
 
