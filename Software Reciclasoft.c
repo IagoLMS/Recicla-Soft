@@ -21,7 +21,8 @@ typedef struct {
 typedef struct {
 	char tipo[30];
 	float quantidade[30];
-	
+	char cpfCatador[12];
+	float preco[30]
 }Material;
 
 typedef struct {
@@ -98,45 +99,52 @@ void comprarMaterial (Cadastro cadastrados[]) {
 	printf("Materiais disponiveis para compra: \n");
 	printf("//==================================================//\n");
 	for (int i = 0; i < materialQuantidade; i++) {
-//		printf("ID: %d\n", i + 1);
-//		printf("Tipo: %s\n", materiais[i].tipo);
-//		printf("Quantidade: %.2f\n", materiais[i].quantidade);
-//		printf("CPF: %d\n", materiais[i].cpfCatador);
-		printf("//==================================================//\n");
+		printf("ID: %d\n", i + 1);
+		printf("Tipo: %s\n", materiais[i].tipo);
+		printf("Quantidade: %.2f\n", materiais[i].quantidade[0]);
+		printf("Preço: %.2f", materiais[i].preco[0]);
+	//	printf("CPF: %d\n", materiais[i].cpfCatador);
+		printf("\n//==================================================//\n");
 	}
 	printf("Digite o ID do material que deseja comprar (0 para sair): ");
 	int escolha;
 	scanf("%d", &escolha);
 	buffed(); 
 	
+	if(escolha > materialQuantidade){
+		printf("Escolha invalida!\n");
+		pausa();
+		return 0;
+		
+	}
 	int compra = escolha -1;
 	
-	printf("Comprando %s (%.2f kg) do catador com cpf "/*%d*/"\n", materiais[compra].tipo, 
-	materiais[compra].quantidade /*materiais[compra].cpfCatador*/);
+	printf("Comprando %s (%.2f kg) do catador com cpf %s\n", materiais[compra].tipo, 
+	materiais[compra].quantidade[0], materiais[compra].cpfCatador);
 	
 	float quantidadeCompra;
 	printf("Quantos kg deseja comprar? ");
 	scanf("%f", &quantidadeCompra);
 	buffed();
 	
-	if (quantidadeCompra > materiais[compra].quantidade[escolha]) {
+	if (quantidadeCompra > materiais[compra].quantidade[0]) {
 		printf("A quantidade que você solicitou não existe no estoque!\n");
-		printf("Quantidade disponivel: %.2f", materiais[compra].quantidade);
+		printf("Quantidade disponivel: %.2f\n", materiais[compra].quantidade[0]);
 		pausa();
 		return;
 	}
 	
-/*	for (int i = 0; i < TAM; i++) {
-		if (cadastrados[i].catador.cpf == materiais[compra].cpfCatador) {
-			float pagamento;
-			pagamento = quantidadeCompra * 5;
-			cadastrados[i].catador.saldo += pagamento;
-			printf("Pagamento de %.2f feita ao catador %s\n", pagamento, cadastrados[i].catador.nome);
-			break;
-		}
-	}  */
-	materiais[compra].quantidade[escolha] -= quantidadeCompra;
-	if(materiais[compra].quantidade == 0){
+	for (int i = 0; i < TAM; i++) {
+        if (strcmp(cadastrados[i].catador.cpf, materiais[compra].cpfCatador) == 0) {
+            float pagamento = quantidadeCompra * materiais[compra].preco[0];
+            materiais[compra].quantidade[0] -= quantidadeCompra;
+            cadastrados[i].catador.saldo += pagamento;
+            printf("Pagamento de %.2f feito ao catador %s\n", pagamento, cadastrados[i].catador.nome);
+            break;
+        }
+    }
+    
+	if(materiais[compra].quantidade[0] == 0){
 	for (int i = compra; i < materialQuantidade -1; i++) {
 		materiais[i] = materiais [i + 1];
 	}
@@ -147,7 +155,7 @@ void comprarMaterial (Cadastro cadastrados[]) {
 	pausa(); 
 }
 
-void estoqueMaterial(){
+/*void estoqueMaterial(){
 	int n, opcao;
 	Material materiais;
 	
@@ -164,7 +172,7 @@ void estoqueMaterial(){
 		case 1:
 			limpa();
 			printf("\nEscolha uma opção: ");
-			printf("Materiais Reciclaveis disponiveis\n");
+			printf("\nMateriais Reciclaveis disponiveis\n");
 			printf("1- %s\n", materiais.tipo[0] );
 			printf("2- %s\n", materiais.tipo[1]);
 			printf("3- %s\n", materiais.tipo[2]);
@@ -195,7 +203,7 @@ void estoqueMaterial(){
 	}
 	
 }
-
+*/
 void ListarMaterial() {
 	limpa();
 	printf("Materiais Reciclaveis disponiveis\n");
@@ -290,8 +298,9 @@ void loginCatador(Cadastro cadastrado[]) {
 				switch (opcao) {
 					case 1:
 						printf("//=================(Escolha Material)=================//\n");
-//						estoqueMaterial);
-						limpa();
+						//estoqueMaterial);
+						cadastrarMaterial(cadastrado);
+						
 						break;
 					
 					case 0:
@@ -387,7 +396,7 @@ void menuADM(Cadastro cadastrados[]) {
 
 		switch (escolha) {
 			case 1: // estoque
-				estoqueMaterial();
+			//	estoqueMaterial();
 				break;
 
 			case 2: //
@@ -470,54 +479,54 @@ void loginAdmin(Cadastro cadastrado[]) {
 	} while (1);
 }
 
-/*void cadastrarMaterial(Cadastro *cadastrado) {
+void cadastrarMaterial(Cadastro *cadastrado) {
 	if (materialQuantidade >= MAXMATERIAL) {
 		printf("Capacidade máxima de material! ");
 		pausa();
 		return;
 	}
-	
+	Material novoMaterial;
 	ListarMaterial();
+	buffed();
 	int escolha;
 	scanf("%d", &escolha);
 	buffed();
 	switch (escolha) {
-		case 1:
-			strcpy(cadastrado.novoMaterial.tipo, "Ouro");
-			break;
-		case 2:
-			strcpy(cadastrado.novoMaterial.tipo, "Cobre");
-			break;
-		case 3:
-			strcpy(cadastrado.novoMaterial.tipo, "Ferro");
-			break;
-		case 4:
-			strcpy(cadastrado.novoMaterial.tipo, "Aluminio");
-			break;
-		case 5:
-			strcpy(cadastrado.novoMaterial.tipo, "Plástico");
-			break;
-		default:
-			printf("Informação invalida");
-			pausa(); 
-			return;
-	}
+        case 1:
+            strcpy(novoMaterial.tipo, "Ouro");
+            break;
+        case 2:
+            strcpy(novoMaterial.tipo, "Cobre");
+            break;
+        case 3:
+            strcpy(novoMaterial.tipo, "Ferro");
+            break;
+        case 4:
+            strcpy(novoMaterial.tipo, "Alumínio");
+            break;
+        case 5:
+            strcpy(novoMaterial.tipo, "Plástico");
+            break;
+        default:
+            printf("Informação inválida!\n");
+            pausa();
+            return;
+    }
 	
 	printf("Quantos Kg você tem do material? ");
-	scanf("%f", &cadastrado.novoMaterial.quantidade);
+	scanf("%f", &novoMaterial.quantidade[0]);
 	buffed();
 	
-//	cadastrado.catador.cpf = catador->catador.cpf;
-//	materiais[materialQuantidade++] = novoMaterial;
+	printf("Digite o preço por kg: ");
+	scanf("%f", &novoMaterial.preco[0]);
+	buffed();
 	
-	printf("Material cadastrado!\n");
-	pausa();
-	
-}*/
+	strcpy(novoMaterial.cpfCatador, cadastrado->catador.cpf);
+    materiais[materialQuantidade++] = novoMaterial;
 
-
-
-
+    printf("Material cadastrado com sucesso!\n");
+    pausa();
+}
 void menuInicial(Cadastro cadastrado[]) {
 	int n;
 	do {
