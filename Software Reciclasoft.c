@@ -191,7 +191,7 @@ void estoqueMaterial(){
 
 			scanf("%d", &opcao);
 			buffed();
-				printf("De %s nós temos: %f.2f Kg\n", materiais[opcao - 1].tipo, materiais[opcao - 1].quantidade[0]);
+				printf("De %s nós temos: %.2f Kg\n", materiais[opcao - 1].tipo, materiais[opcao - 1].quantidade[0]);
 
 			break;
 
@@ -208,8 +208,10 @@ void estoqueMaterial(){
 			scanf("%d", &opcao);
 			buffed();
 
-			printf("\nDigite o novo valor: ");
-			scanf("%f",materiais[opcao - 1].quantidade[0]);
+			printf("\nDigite a nova quantidade do material: ");
+			scanf("%f",&materiais[opcao - 1].quantidade[0]);
+			pausa();
+			break;
 	}
 
 }
@@ -298,6 +300,7 @@ void loginCatador(Cadastro cadastrado[]) {
 				limpa();
 				printf("//=================( RECICLA SOFT )=================//\n");
 				printf("(1) Cadastrar Materiais\n");
+				printf("(2) Saldo");
 				printf("(0) Voltar");
 				printf("\nEscolha uma opção: ");
 				scanf("%d", &opcao);
@@ -309,9 +312,16 @@ void loginCatador(Cadastro cadastrado[]) {
 						printf("//=================(Escolha Material)=================//\n");
 						//estoqueMaterial);
 						cadastrarMaterial(cadastrado);
-
 						break;
-
+				case 2:
+				for (int i = 0; i < code; i++) {
+        		if (strcmp(testeUsuario, cadastrado[i].usuario) == 0) {
+           		printf("Saldo atual: R$ %.2f\n", cadastrado[i].catador.saldo);
+            	pausa();
+            	break;
+        }
+    }
+					break;
 					case 0:
 						printf("Voltando...\n");
 						return;
@@ -371,26 +381,21 @@ void menuADM(Cadastro cadastrados[]) {
 		printf("MATERIAIS:\n");
 		printf("___________________________\n");
 		printf("|1- Estoque\n");
-		printf("|2- Vender Materias\n");
 		printf("\n");
 
 		printf("ÁREA DE CADASTRO\n");
 		printf("___________________________\n");
-		printf("|3- Adicionar Materias \n");
-		printf("|4- Lista de Materiais\n");
+		printf("|2- Lista de Materiais\n");
 		printf("\n");
 
 		printf("ÁREA DOS CATADORES\n");
 		printf("___________________________\n");
-		printf("|5- Listar Catadores \n");
-		printf("|6- Alterar Cadastro\n");
+		printf("|3- Listar Catadores \n");
 		printf("\n");
 
 		printf("ÁREA DOS PAGAMENTO\n");
 		printf("___________________________\n");
-		printf("|7- Saldo da Empresa \n");
-		printf("|8- Pagar Catador \n");
-		printf("|9- Comprar material \n");
+		printf("|4- Comprar material \n");
 
 		printf("\n");
 		printf("___________________________\n");
@@ -408,16 +413,8 @@ void menuADM(Cadastro cadastrados[]) {
 				estoqueMaterial();
 				break;
 
-			case 2: //
-
-				break;
-
-			case 3:
-
-				break;
-
-			case 4:
-				printf("Materiais Reciclaveis disponiveis\n");
+			case 2: //materiais
+			printf("Materiais Reciclaveis disponiveis\n");
 				printf("1- Ouro\n");
 				printf("2- cobre\n");
 				printf("3- Ferro\n");
@@ -425,19 +422,12 @@ void menuADM(Cadastro cadastrados[]) {
 				printf("5- Plastico\n");
 				pausa();
 				break;
-			case 5:
-				listarCatadores(cadastrados);
 				break;
 
-			case 6:
-				//Alterar cadastro
+			case 3: //listar catadores
+				listarCatadores(cadastrados);
 				break;
-			case 7:
-				//saldo da empresa
-				break;
-			case 8:
-			//pagar catador
-			case 9:
+			case 4: //compra de material
 				comprarMaterial(cadastrados);
 				break;
 			case 0:
