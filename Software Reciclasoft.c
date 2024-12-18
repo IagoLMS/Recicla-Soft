@@ -100,6 +100,7 @@ void salvarMateriais(Cadastro cadastrado[]) {
 
 void comprarMaterial (Cadastro cadastrado[]) {
 	if (materialQuantidade == 0) {
+	printf("//======================( RECICLA SOFT )====================//\n\n");
 		printf("\n\nNenhum material disponivel para compra!\n");
 		pausa();
 		return;
@@ -175,34 +176,44 @@ void estoqueMaterial() {
 	printf("| (2) - Trocar Quantidade\n");
 	printf("| (0) - Voltar\n");
 	scanf("%i", &n);
+	
 	buffed();
 
 	switch(n) {
 		case 1:
+			
 			limpa();
+			printf("//=================( RECICLA SOFT )=================//\n\n");
+			printf("//===================( ESTOQUE )====================//\n");
+			
 			printf("\nEscolha uma opcao: ");
 			printf("\nMateriais Reciclaveis disponiveis\n");
-			printf("1- %s\n", materiais[0].tipo);
-			printf("2- %s\n", materiais[1].tipo);
-			printf("3- %s\n", materiais[2].tipo);
-			printf("4- %s\n", materiais[3].tipo);
-			printf("5- %s\n", materiais[4].tipo);
+			printf("(1)- %s\n", materiais[0].tipo);
+			printf("(2)- %s\n", materiais[1].tipo);
+			printf("(3)- %s\n", materiais[2].tipo);
+			printf("(4)- %s\n", materiais[3].tipo);
+			printf("(5)- %s\n", materiais[4].tipo);
 
 			scanf("%d", &opcao);
 			buffed();
+			
 			printf("De %s nos temos: %.2f Kg\n", materiais[opcao - 1].tipo, materiais[opcao - 1].quantidade[0]);
-
+			pausa();
 			break;
 
 		case 2:
 			limpa();
+			
+	    	printf("//=================( RECICLA SOFT )=================//\n\n");
+			printf("//===================( ESTOQUE )====================//\n");
+			
 			printf("\nEscolha uma opcao: ");
 			printf("Materiais Reciclaveis disponiveis\n");
-			printf("1- %s\n", materiais[0].tipo);
-			printf("2- %s\n", materiais[1].tipo);
-			printf("3- %s\n", materiais[2].tipo);
-			printf("4- %s\n", materiais[3].tipo);
-			printf("5- %s\n", materiais[4].tipo);
+			printf("(1)- %s\n", materiais[0].tipo);
+			printf("(2)- %s\n", materiais[1].tipo);
+			printf("(3)- %s\n", materiais[2].tipo);
+			printf("(4)- %s\n", materiais[3].tipo);
+			printf("(5)- %s\n", materiais[4].tipo);
 
 			scanf("%d", &opcao);
 			buffed();
@@ -217,12 +228,15 @@ void estoqueMaterial() {
 
 void ListarMaterial() {
 	limpa();
-	printf("Materiais reciclaveis disponiveis:\n");
-	printf("1- Ouro\n");
-	printf("2- Cobre\n");
-	printf("3- Ferro\n");
-	printf("4- Aluminio\n");
-	printf("5- Plastico\n");
+	
+	printf("//======================( RECICLA SOFT )====================//\n\n");
+	printf("//===================( LISTA DE MATERIAIS )====================//\n");
+	printf("| Materiais reciclaveis disponiveis:\n");
+	printf("|(1)- Ouro\n");
+	printf("|(2)- Cobre\n");
+	printf("|(3)- Ferro\n");
+	printf("|(4)- Aluminio\n");
+	printf("|(5)- Plastico\n");
 }
 
 void cadastroCatador(Cadastro cadastrado[]) {
