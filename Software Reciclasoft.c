@@ -5,8 +5,7 @@
 #include <locale.h>
 
 #define MAXMATERIAL 100
-#define TAM 50
-#define MAX_CATADORES 100
+#define TAM 100
 
 int code = 1;
 
@@ -35,8 +34,6 @@ typedef struct {
 
 } Cadastro;
 
-Catadores catadores[MAX_CATADORES];
-
 Material materiais[MAXMATERIAL];
 int materialQuantidade = 0;
 
@@ -50,18 +47,29 @@ void buffed() {
 	fflush(stdin);
 }
 
-void carregarDados(Cadastro cadastrado[]) {
+void carregarCadastro(Cadastro cadastrado[]) {
 	FILE *arquivo = fopen("cadastros.dat", "rb");
 	if (arquivo == NULL) {
-		printf("| Nenhum dado encontrado. Um novo arquivo sera criado apos salvar.\n");
+		printf("| Nenhum cadastro encontrado. Um novo arquivo sera criado apos salvar.\n");
 		pausa();
 		return;
 	}
 	fread(&code, sizeof(int), 1, arquivo);
 	fread(cadastrado, sizeof(Cadastro), TAM, arquivo);
 	fclose(arquivo);
-	printf("| Dados carregados com sucesso!\n");
 	pausa();
+}
+
+void carregarMateriais(Cadastro cadastrado[]) {
+    FILE *arquivo = fopen("materiais.dat", "rb");
+    if (arquivo == NULL) {
+        printf("Nenhum material encontrado. Um novo arquivo será criado após salvar.\n");
+        return;
+    }
+    fread(&materialQuantidade, sizeof(int), 1, arquivo);
+    fread(materiais, sizeof(Material), materialQuantidade, arquivo);
+    fclose(arquivo);
+    pausa();
 }
 
 void salvarDados(Cadastro cadastrado[]) {
@@ -75,6 +83,19 @@ void salvarDados(Cadastro cadastrado[]) {
 	fclose(arquivo);
 	printf("Dados salvos com sucesso!\n");
 	pausa();
+}
+
+void salvarMateriais(Cadastro cadastrado[]) {
+    FILE *arquivo = fopen("materiais.dat", "wb");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo para salvar os materiais.\n");
+        return;
+    }
+    fwrite(&materialQuantidade, sizeof(int), 1, arquivo);
+    fwrite(materiais, sizeof(Material), materialQuantidade, arquivo);
+    fclose(arquivo);
+    printf("Materiais salvos com sucesso!\n");
+    pausa();
 }
 
 void comprarMaterial (Cadastro cadastrado[]) {
@@ -207,7 +228,7 @@ void ListarMaterial() {
 void cadastroCatador(Cadastro cadastrado[]) {
 	int validacao;
 
-	if (numCatadores >= MAX_CATADORES) {
+	if (code >= TAM) {
 		printf("//====================( Cadastro )==================//\n");
 		printf("| Espaço de memoria cheio. Por favor, aloque mais espaço.\n");
 		pausa();
@@ -276,7 +297,6 @@ void cadastroCatador(Cadastro cadastrado[]) {
 	pausa();
 
 	code++;
-	numCatadores++;
 }
 
 int validador(Cadastro cadastrado[], char *testeUsuario, char *testeSenha) {
@@ -436,6 +456,9 @@ void menuCatador(Cadastro cadastrado[]) {
 		scanf("%i", &n);
 		buffed();
 		printf("//==================================================//\n");
+		limpa();
+		pausa();
+		
 		switch(n) {
 			case 1: 
 				cadastroCatador(cadastrado);
@@ -446,8 +469,6 @@ void menuCatador(Cadastro cadastrado[]) {
 				break;
 
 			case 0: 
-				limpa();
-				pausa();
 				return;
 
 			default:
@@ -602,6 +623,7 @@ void menuInicial(Cadastro cadastrado[]) {
 				break;
 
 			case 0:
+				salvarMateriais(cadastrado);
 				salvarDados(cadastrado);
 				limpa();
 				printf("\n\n| Encerrando o sistema ............");
@@ -619,8 +641,12 @@ int main() {
 	setlocale(LC_ALL, "Portuguese");
 
 	Cadastro cadastrado[TAM] = {{"senai", "senha"}};
-	carregarDados(cadastrado);
-
+	
+	carregarCadastro(cadastrado);
+	carregarMateriais(cadastrado);
+	printf("| Dados carregados com sucesso!\n");
+	
+	pausa();
 	menuInicial(cadastrado);
 	return 0;
 }
